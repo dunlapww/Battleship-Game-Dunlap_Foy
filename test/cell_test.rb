@@ -72,7 +72,7 @@ class CellTest < Minitest::Test
     assert_equal false, cell.fired_upon?
   end
 
-  def test_if_not_fired_upon_render_period
+  def test_if_cell_not_fired_upon_render_period
     cell = Cell.new("B4")
 
     assert_equal ".", cell.render
@@ -82,8 +82,49 @@ class CellTest < Minitest::Test
 
   end
 
+  def test_cell_render_sunken_ship
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("B4")
 
+    cell.place_ship(ship)
+    cell.fire_upon
+    assert_equal 2, ship.health
+    cell.fire_upon
+    assert_equal 1, ship.health
+    cell.fire_upon
+    assert_equal 0, ship.health
+    assert_equal "X", cell.render
 
+  end
+
+  def test_cell_render_hit_and_changes_to_X_when_sunk
+    ship = Ship.new("Cruiser", 3)
+    cell = Cell.new("B4")
+
+    cell.place_ship(ship)
+    cell.fire_upon
+    assert_equal "H", cell.render
+    cell.fire_upon
+    assert_equal "H", cell.render
+    cell.fire_upon
+    assert_equal "X", cell.render
+
+  end
+
+  def test_cell_redner_miss
+      cell = Cell.new("B4")
+
+      cell.fire_upon
+      assert_equal "M", cell.render
+
+  end
+
+  def test_cell_renders_s_when_passed_true
+    cell = Cell.new("B4")
+
+    assert_equal "S", cell.render(true)
+
+  end
 
 
 end
