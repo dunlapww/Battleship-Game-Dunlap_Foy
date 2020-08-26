@@ -41,7 +41,7 @@ class Cell
 #M if it's been fired upon and there is no ship on cell
 #H if it's been fired upon and there is a ship on the cell
 #X if it's been fired upon and there is a ship on the cell and the ship's health is 0
-#S if it's user's ship is in cell (not computer's), display S.
+#S if it's user's ship is in cell (not computer's), display S (and also change S to h and x)
   end
 
 end
