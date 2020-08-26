@@ -121,6 +121,8 @@ class CellTest < Minitest::Test
 
   def test_cell_renders_s_when_passed_true
     cell = Cell.new("B4")
+    ship = Ship.new("Cruiser",3)
+    cell.place_ship(ship)
 
     assert_equal "S", cell.render(true)
 

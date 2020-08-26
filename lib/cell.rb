@@ -33,7 +33,7 @@ class Cell
       return "M"
     elsif @fired_upon && @ship.class == Ship
       return "H"
-    elsif show_ship
+    elsif show_ship && @ship.class == Ship
      return "S"
     else
      return "error_catcher"
