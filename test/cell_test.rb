@@ -128,13 +128,15 @@ class CellTest < Minitest::Test
 
   def test_cell_turns_from_s_to_h_to_x
     cell = Cell.new("B4")
+    ship = Ship.new("Cruiser",3)
+    cell.place_ship(ship)
     assert_equal "S", cell.render(true)
     cell.fire_upon
     assert_equal "H", cell.render(true)
     cell.fire_upon
     assert_equal "H", cell.render(true)
     cell.fire_upon
-    assert_equal "X", cELL.render(true)
+    assert_equal "X", cell.render(true)
   end
 
 
