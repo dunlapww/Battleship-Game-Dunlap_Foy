@@ -45,9 +45,5 @@ class ShipTest < Minitest::Test
     assert_equal true, ship.sunk?
   end
 
-  def test_render_return_period
-    ship = Ship.new("Cruiser", 3)
-    cell
-  end
 
 end
