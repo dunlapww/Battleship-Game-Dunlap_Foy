@@ -42,7 +42,6 @@ class Cell
 #H if it's been fired upon and there is a ship on the cell
 #X if it's been fired upon and there is a ship on the cell and the ship's health is 0
 #S if it's user's ship is in cell (not computer's), display S.
-#S doesn't feel complete - we want to see S when it's our ship, but if computer hits our ship, I believe it should chnage from S to H and then to X.
   end
 
 end
