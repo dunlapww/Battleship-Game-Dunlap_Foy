@@ -126,5 +126,17 @@ class CellTest < Minitest::Test
 
   end
 
+  def test_cell_turns_from_s_to_h_to_x
+    cell = Cell.new("B4")
+    assert_equal "S", cell.render(true)
+    cell.fire_upon
+    assert_equal "H", cell.render(true)
+    cell.fire_upon
+    assert_equal "H", cell.render(true)
+    cell.fire_upon
+    assert_equal "X", cELL.render(true)
+  end
+
+
 
 end
