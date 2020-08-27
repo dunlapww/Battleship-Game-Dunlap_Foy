@@ -9,9 +9,9 @@
          @cells[coordinate] = Cell.new(coordinate)
        end
 
-       @nums_letters  = Array.new
-       @given_numbers = Array.new
-       @given_letters = Array.new
+       @nums_letters  = []
+       @given_numbers = []
+       @given_letters = []
    end
 
    def validate_coordinate?(coordinate)
@@ -19,18 +19,29 @@
    end
 
    def valid_placement?(ship, ship_position)
+     # if ship.name == "Submarine"
+     #   require "pry"; binding.pry
+     # end
      breakup_ship_placement(ship_position)
      breakup_ship_placement_to_letters_and_numbers
-     # test_coordinate_is_on_the_board
      return false if ship_is_either_horizontal_or_vertical == false
      return false if coordinates_are_consecutive == false
      return false if placement_is_length_of_ship(ship, ship_position) == false
-     true
-     # test_coordinate_on_board_is_empty
+     return true
    end
 
-   def breakup_ship_placement(given_array)
-     @nums_letters = given_array.map {|coord| coord.scan(/\d+|\D+/)}
+   def placement_is_length_of_ship(ship, ship_position)
+
+     if ship_position.length == ship.length
+       true
+     else
+       false
+     end
+   end
+
+
+   def breakup_ship_placement(ship_position)
+     @nums_letters = ship_position.map {|coord| coord.scan(/\d+|\D+/)}
    end
 
    def breakup_ship_placement_to_letters_and_numbers
@@ -58,20 +69,6 @@
      else
        false
      end
-   end
 
-   def placement_is_length_of_ship(ship, ship_position)
-     if ship_position.length == ship.length
-       true
-     else
-       false
-     end
    end
-
  end
-
-# cell a cell on the 4x4 board?
-# cell empty?
-# checks validate ->
-# board.place(cruiser, ["A1", "A2", "A3"])
-# use hash @cells

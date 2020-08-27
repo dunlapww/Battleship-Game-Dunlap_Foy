@@ -50,84 +50,26 @@ class BoardTest < Minitest::Test
     assert_equal false, board.validate_coordinate?("A22")
   end
 
-  def test_number_of_coordinates_in_array_equals_length_of_ship
+  def test_valid_placement
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
     board = Board.new
 
-    assert_equal false, board.valid_placement?(cruiser, %w(A1 A2))
-    assert_equal false, board.valid_placement?(submarine, %w(A2 A3 A4))
+    assert_equal true, board.valid_placement?(submarine, %w(A1 A2))
+    assert_equal true, board.valid_placement?(cruiser, %w(A1 A2 A3))
+    assert_equal true, board.valid_placement?(submarine, %w(A1 A2))
+    assert_equal false, board.valid_placement?(cruiser,%w(A1 A2))
   end
 
-  def test_number_of_coordinates_in_array_equals_length_of_ship_helper_method
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-    board = Board.new
 
-    assert_equal false, board.placement_is_length_of_ship(cruiser, %w(A1 A2))
-    assert_equal false, board.placement_is_length_of_ship(submarine, %w(A2 A3 A4))
-  end
-
-  # def test_ship_coordinates_are_consecutive
+  # def test_ship_placement_is_consecutive
   #   cruiser = Ship.new("Cruiser", 3)
   #   submarine = Ship.new("Submarine", 2)
   #   board = Board.new
   #
-  #   assert_equal false, board.valid_placement?(cruiser, ["A3", "A2", "A1"])
-  #   assert_equal false, board.valid_placement?(submarine, ["C1", "B1"])
-  # end
+  #   board.valid_placement?(cruiser, ["A1", "B1", "C1"])
   #
-  def test_ship_coordinates_are_consecutive_healper_method
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-    board = Board.new
+  # end
 
-    # board.breakup_ship_placement(["A1", "A2", "A4"])
-    # board.breakup_ship_placement_to_letters_and_numbers
-    # assert_equal false, board.coordinates_are_consecutive
-    #
-    # board.breakup_ship_placement(["A1", "C1"])
-    # board.breakup_ship_placement_to_letters_and_numbers
-    # assert_equal false, board.coordinates_are_consecutive
 
-    board.breakup_ship_placement(["A3", "A2", "A1"])
-    board.breakup_ship_placement_to_letters_and_numbers
-    assert_equal false, board.coordinates_are_consecutive
-
-    board.breakup_ship_placement(["C1", "B1"])
-    board.breakup_ship_placement_to_letters_and_numbers
-    assert_equal false, board.coordinates_are_consecutive
-  end
-
-  def test_coordinates_cannot_be_diagonal
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-    board = Board.new
-
-    assert_equal false, board.valid_placement?(cruiser, ["A1", "B2", "C3"])
-    assert_equal false, board.valid_placement?(submarine, ["C2", "D3"])
-  end
-
-  def test_coordinates_cannot_be_diagonal_helper_method
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-    board = Board.new
-
-    board.breakup_ship_placement(["A1", "B2", "C3"])
-    board.breakup_ship_placement_to_letters_and_numbers
-    assert_equal false, board.ship_is_either_horizontal_or_vertical
-
-    board.breakup_ship_placement(["C2", "D3"])
-    board.breakup_ship_placement_to_letters_and_numbers
-    assert_equal false, board.ship_is_either_horizontal_or_vertical
-  end
-
-  def test_valid_placement_positive_return
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
-    board = Board.new
-
-    assert_equal true, board.valid_placement?(cruiser, ["B1", "C1", "D1"])
-    assert_equal true, board.valid_placement?(submarine, ["A1", "A2"])
-  end
 end
