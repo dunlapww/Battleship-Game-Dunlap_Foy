@@ -25,7 +25,7 @@ class Cell
   end
 
   def render(show_ship = false)
-    if @fired_upon == false && show_ship == false
+    if @fired_upon == false && show_ship == falsep
       return "."
     elsif @fired_upon && @ship.class == Ship && @ship.health == 0
       return "X"
