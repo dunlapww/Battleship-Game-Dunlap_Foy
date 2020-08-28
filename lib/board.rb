@@ -1,5 +1,3 @@
-require './lib/cell'
-
  class Board
    attr_reader :cells
    def initialize()
@@ -44,7 +42,7 @@ require './lib/cell'
    end
 
    def user_coords_are_length_of_ship(ship, user_coords)
-     return false if ship_position.length != ship.length
+     return false if user_coords.length != ship.length
      true
    end
 
@@ -52,36 +50,36 @@ require './lib/cell'
      user_coords.map {|coord| coord[0]}
    end
 
+   def ship_is_horizontal(user_coords)
+     user_letters(user_coords).all? (user_letters(user_coords)[0])
+   end
+
    def user_numbers(user_coords)
      user_coords.map {|coord| coord.gsub(coord[0],"").to_i}
    end
 
-   def ship_is_vertical
-     user_letters.all? (user_letters[0])
+   def ship_is_vertical(user_coords)
+     user_numbers(user_coords).all? (user_numbers(user_coords)[0])
    end
 
-   def ship_is_horizontal
-     user_numbers.all? (user_numbers[0])
-   end
-
-   def ship_is_horizontal_or_vertical
-     ship_is_vertical || ship_is_horizontal ? true : false
+   def ship_is_horizontal_or_vertical(user_coords)
+     ship_is_vertical(user_coords) || ship_is_horizontal(user_coords) ? true : false
    end
 
    def user_range(set)
-     set.min..set.max
+     (set.min..set.max).to_a
    end
 
-   def letters_are_consec
-     user_range(user_letters).to_a == user_letters.sort
+   def letters_are_consec(user_coords)
+     user_range(user_letters(user_coords)) == user_letters(user_coords).sort
    end
 
-   def numbers_are_consec
-     user_range(user_numbers).to_a == user_numbers.sort
+   def numbers_are_consec(user_coords)
+     user_range(user_numbers(user_coords)) == user_numbers(user_coords).sort
    end
 
-   def user_coords_are_consecutive
-     letters_are_consec || numbers_are_consec ? true : false
+   def user_coords_are_consecutive(user_coords)
+     letters_are_consec(user_coords) || numbers_are_consec(user_coords) ? true : false
    end
 
    def empty_coordinate?(coordinate)
@@ -97,16 +95,29 @@ require './lib/cell'
 
    def valid_placement?(ship, user_coords)
     return false if user_coords_are_on_board(user_coords) == false
-    return false if placement_is_length_of_ship(ship, user_coords) == false
-    return false if ship_is_horizontal_or_vertical == false
-    return false if coordinates_are_consecutive == false
+    return false if user_coords_are_length_of_ship(ship, user_coords) == false
+    return false if ship_is_horizontal_or_vertical(user_coords) == false
+    return false if user_coords_are_consecutive(user_coords) == false
     return false if user_coords_are_empty(user_coords) == false
     true
+   end
+
+   def display_columns
+     print "  "
+     board_columns.each do |column|
+       print "#{column} "
+     end
+     print "\n"
+   end
+
+   def display_row(counter, board_size)
+     board_rows[counter == 0 ? 0 : counter / board_size] + " "
    end
 
    def render
      counter = 0
      @cells.each do |coord, cell|
+       print display_row(counter, board_size) if counter % board_size == 0
        counter += 1
        print "#{cell.render} "
        print "\n" if counter % board_size == 0
