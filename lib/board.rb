@@ -1,74 +1,117 @@
+require './lib/cell'
+
  class Board
    attr_reader :cells
    def initialize()
-     coordinates = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4",
-       "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+    @cells = generate_board
+   end
 
-       @cells = Hash.new()
-       coordinates.each do |coordinate|
-         @cells[coordinate] = Cell.new(coordinate)
+   def board_size
+     4
+   end
+
+   def board_rows
+     ("A"..(board_size + 64).chr).to_a
+   end
+
+   def board_columns
+     (1..board_size).to_a
+   end
+
+   def gen_coord(letter, number)
+     letter + number.to_s
+   end
+
+   def generate_board
+     cells = Hash.new()
+     board_rows.each do |letter|
+       board_columns.each do |number|
+         cells[gen_coord(letter, number)] = Cell.new(gen_coord(letter, number))
        end
-
-       @nums_letters  = []
-       @given_numbers = []
-       @given_letters = []
+     end
+     cells
    end
 
    def validate_coordinate?(coordinate)
      @cells.keys.include?(coordinate)
    end
 
-   def valid_placement?(ship, ship_position)
-     # if ship.name == "Submarine"
-     #   require "pry"; binding.pry
-     # end
-     breakup_ship_placement(ship_position)
-     breakup_ship_placement_to_letters_and_numbers
-     return false if ship_is_either_horizontal_or_vertical == false
-     return false if coordinates_are_consecutive == false
-     return false if placement_is_length_of_ship(ship, ship_position) == false
-     return true
+   def user_coords_are_on_board(user_coords)
+     user_coords.each do |coord|
+       return false if validate_coordinate?(coord) == false
+     end
+     true
    end
 
-   def placement_is_length_of_ship(ship, ship_position)
+   def user_coords_are_length_of_ship(ship, user_coords)
+     return false if ship_position.length != ship.length
+     true
+   end
 
-     if ship_position.length == ship.length
-       true
-     else
-       false
+   def user_letters(user_coords)
+     user_coords.map {|coord| coord[0]}
+   end
+
+   def user_numbers(user_coords)
+     user_coords.map {|coord| coord.gsub(coord[0],"").to_i}
+   end
+
+   def ship_is_vertical
+     user_letters.all? (user_letters[0])
+   end
+
+   def ship_is_horizontal
+     user_numbers.all? (user_numbers[0])
+   end
+
+   def ship_is_horizontal_or_vertical
+     ship_is_vertical || ship_is_horizontal ? true : false
+   end
+
+   def user_range(set)
+     set.min..set.max
+   end
+
+   def letters_are_consec
+     user_range(user_letters).to_a == user_letters.sort
+   end
+
+   def numbers_are_consec
+     user_range(user_numbers).to_a == user_numbers.sort
+   end
+
+   def user_coords_are_consecutive
+     letters_are_consec || numbers_are_consec ? true : false
+   end
+
+   def empty_coordinate?(coordinate)
+     @cells[coordinate].empty?
+   end
+
+   def user_coords_are_empty(user_coords)
+     user_coords.each do |coord|
+       return false if empty_coordinate?(coord) == false
+     end
+     true
+   end
+
+   def valid_placement?(ship, user_coords)
+    return false if user_coords_are_on_board(user_coords) == false
+    return false if placement_is_length_of_ship(ship, user_coords) == false
+    return false if ship_is_horizontal_or_vertical == false
+    return false if coordinates_are_consecutive == false
+    return false if user_coords_are_empty(user_coords) == false
+    true
+   end
+
+   def render
+     counter = 0
+     @cells.each do |coord, cell|
+       counter += 1
+       print "#{cell.render} "
+       print "\n" if counter % board_size == 0
      end
    end
 
 
-   def breakup_ship_placement(ship_position)
-     @nums_letters = ship_position.map {|coord| coord.scan(/\d+|\D+/)}
-   end
-
-   def breakup_ship_placement_to_letters_and_numbers
-     @given_letters = []
-     @given_numbers = []
-     @nums_letters.each do |num_let|
-       @given_letters << num_let[0]
-       @given_numbers << num_let[1].to_i
-     end
-   end
-
-   def ship_is_either_horizontal_or_vertical
-     vertical = @given_letters.all? (@given_letters[0])
-     horizontal = @given_numbers.all?(@given_numbers[0])
-     vertical || horizontal ? true : false
-   end
-
-   def coordinates_are_consecutive
-     letters_consec = (@given_letters.min..@given_letters.max).to_a == @given_letters.sort
-     numbers_consec = (@given_numbers.min..@given_numbers.max).to_a == @given_numbers.sort
-     letters_consec || numbers_consec ? true : false
-
-     if letters_consec == true || numbers_consec == true
-       return true
-     else
-       false
-     end
-
-   end
  end
