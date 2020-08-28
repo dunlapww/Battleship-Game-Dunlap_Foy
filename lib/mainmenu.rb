@@ -14,7 +14,7 @@ attr_accessor :user_input
 
   def interpret_user_input
     if @user_input.downcase == 'p'
-      "play the game"
+      return Play.new()
     elsif @user_input.downcase == 'q'
       exit(true)
     else
