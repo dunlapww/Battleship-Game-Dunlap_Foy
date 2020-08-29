@@ -1,3 +1,5 @@
+
+
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
@@ -10,16 +12,6 @@ class BoardTest < Minitest::Test
     assert_instance_of Board, board
   end
 
-  def setup
-    coordinates = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4",
-      "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
-
-    @cells = Hash.new()
-    coordinates.each do |coordinate|
-      @cells[coordinate] = Cell.new(coordinate)
-    end
-  end
-
   def test_it_exists
     board = Board.new()
     assert_instance_of Board, board
@@ -27,7 +19,7 @@ class BoardTest < Minitest::Test
 
   def test_board_size_is_a_number
     board = Board.new()
-    assert_equal 4, board.board_size
+    assert_instance_of Integer, board.board_size
   end
 
   def test_board_rows_returns_incremental_letters
@@ -45,14 +37,20 @@ class BoardTest < Minitest::Test
     assert_equal "A1", board.gen_coord("A", 1)
   end
 
+  def test_it_can_order_the_board_coordinates
+    board = Board.new
+    sorted_coords = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+    assert_equal sorted_coords, board.ordered_coords
+  end
+
   def test_it_can_generate_a_board
     board = Board.new()
-    board_size = 4
+    # board_size = 4
     board_coords = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4",
       "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
 
     assert_instance_of Hash, board.cells
-    assert_equal board_size * board_size, board.cells.size
+    assert_equal board.board_size * board.board_size, board.cells.size
     assert_equal board_coords, board.cells.keys
     board_coords.each do |coord|
       assert_instance_of Cell, board.cells[coord]
@@ -205,9 +203,22 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_placement?(ship, user_coords)
   end
 
-  def test_it_can_display_row
+  def test_it_can_displa_column_headers
     board = Board.new
-    assert_equal "D ", board.display_row(15, 5)
+    assert_equal "  1 2 3 4 \n", board.display_column_headers
   end
+
+  def test_it_can_display_row_headers
+    board = Board.new
+    assert_equal "D ", board.display_row_header(15, 5)
+  end
+
+  def test_it_can_render_the_board
+    board = Board.new
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n",
+    board.render
+  end
+
+
 
 end
