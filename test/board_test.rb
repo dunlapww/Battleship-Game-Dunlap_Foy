@@ -1,3 +1,5 @@
+
+
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
@@ -8,16 +10,6 @@ class BoardTest < Minitest::Test
   def test_it_exists
     board = Board.new
     assert_instance_of Board, board
-  end
-
-  def setup
-    coordinates = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4",
-      "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
-
-    @cells = Hash.new()
-    coordinates.each do |coordinate|
-      @cells[coordinate] = Cell.new(coordinate)
-    end
   end
 
   def test_it_exists
@@ -43,6 +35,12 @@ class BoardTest < Minitest::Test
   def test_gen_coord
     board = Board.new()
     assert_equal "A1", board.gen_coord("A", 1)
+  end
+
+  def test_it_can_order_the_board_coordinates
+    board = Board.new
+    sorted_coords = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+    assert_equal sorted_coords, board.ordered_coords
   end
 
   def test_it_can_generate_a_board
@@ -205,9 +203,22 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_placement?(ship, user_coords)
   end
 
-  def test_it_can_display_row
+  def test_it_can_displa_column_headers
     board = Board.new
-    assert_equal "D ", board.display_row(15, 5)
+    assert_equal "  1 2 3 4 \n", board.display_column_headers
   end
+
+  def test_it_can_display_row_headers
+    board = Board.new
+    assert_equal "D ", board.display_row_header(15, 5)
+  end
+
+  def test_it_can_render_the_board
+    board = Board.new
+    assert_equal "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n",
+    board.render
+  end
+
+
 
 end

@@ -32,10 +32,8 @@
 
    def generate_board
      cells = Hash.new()
-     board_rows.each do |letter|
-       board_columns.each do |number|
-         cells[gen_coord(letter, number)] = Cell.new(gen_coord(letter, number))
-       end
+     ordered_coords.each do |coord|
+       cells[coord] = Cell.new(coord)
      end
      cells
    end
@@ -125,9 +123,11 @@
      board_rows[counter == 0 ? 0 : counter / board_size] + " "
    end
 
+
+
    def render
      counter = 0
-     display = ""
+     display = display_column_headers
      ordered_coords.each do |coord|
        display += display_row_header(counter, board_size) if counter % board_size == 0
        counter += 1
@@ -136,5 +136,6 @@
      end
      display
    end
+
 
  end

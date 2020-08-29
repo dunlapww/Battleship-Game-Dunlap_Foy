@@ -6,11 +6,7 @@ require './lib/mainmenu'
 require './lib/play'
 class MainMenuTest < Minitest::Test
 
-  def test_it_exists
-    main_menu = MainMenu.new()
-
-    assert_instance_of MainMenu, main_menu
-  end
+  
 
   def test_it_can_ask_a_user_to_play
     main_menu = MainMenu.new()
