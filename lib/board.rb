@@ -20,6 +20,16 @@
      letter + number.to_s
    end
 
+   def ordered_coords
+     board_coords = []
+     board_rows.each do |letter|
+       board_columns.each do |number|
+         board_coords << gen_coord(letter, number)
+       end
+     end
+     board_coords
+   end
+
    def generate_board
      cells = Hash.new()
      board_rows.each do |letter|
@@ -102,27 +112,29 @@
     true
    end
 
-   def display_columns
-     print "  "
+   def display_column_headers
+     first_row = "  "
      board_columns.each do |column|
-       print "#{column} "
+       first_row += "#{column} "
      end
-     print "\n"
+     first_row += "\n"
+     first_row
    end
 
-   def display_row(counter, board_size)
+   def display_row_header(counter, board_size)
      board_rows[counter == 0 ? 0 : counter / board_size] + " "
    end
 
    def render
      counter = 0
-     @cells.each do |coord, cell|
-       print display_row(counter, board_size) if counter % board_size == 0
+     display = ""
+     ordered_coords.each do |coord|
+       display += display_row_header(counter, board_size) if counter % board_size == 0
        counter += 1
-       print "#{cell.render} "
-       print "\n" if counter % board_size == 0
+       display += "#{@cells[coord].render} "
+       display += "\n" if counter % board_size == 0
      end
+     display
    end
-
 
  end
