@@ -7,8 +7,7 @@ class Computer
     @board  = Board.new
   end
 
-  def generate_fire_upon_coordinate
-    available_coords = user.board.
+
   # method that gets valid placements, rand, and then passes coordinates
   # into valid_placement? board method. Loop until rand coord passes true
   # from valid_placement?.
