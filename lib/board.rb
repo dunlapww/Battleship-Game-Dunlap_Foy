@@ -124,13 +124,13 @@
    end
 
 
-   def render
+   def render(bool = false)
      counter = 0
      display = display_column_headers
      ordered_coords.each do |coord|
        display += display_row_header(counter, board_size) if counter % board_size == 0
        counter += 1
-       display += "#{@cells[coord].render} "
+       display += "#{@cells[coord].render(bool)} "
        display += "\n" if counter % board_size == 0
      end
      display
