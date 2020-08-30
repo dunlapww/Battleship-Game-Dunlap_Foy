@@ -17,8 +17,8 @@ class Computer
 
   def generate_ship_coordinate_placement_vertical
     possible_rows = Array.new
-    (1..4).each_cons(3) do |horizontal_sequence|
-      new_array = horizontal_sequence.map do |columns_label|
+    (1..4).each_cons(3) do |vertical_sequence|
+      new_array = vertical_sequence.map do |columns_label|
         (columns_label + 64).chr
       end
       possible_rows << new_array
@@ -36,6 +36,35 @@ class Computer
     end
     possible_column_coordinates
   end
+
+  def generate_ship_coordinate_placement_horizontal
+    possible_columns  = Array.new
+    (1..4).each_cons(3) do |horizontal_sequence|
+      possible_columns << horizontal_sequence
+    end
+    # possible_columns = [[1, 2, 3], [2, 3, 4]]
+
+    possible_column_coordinates = Array.new
+    # require "pry"; binding.pry
+    possible_columns.each do |consec_column_label|
+      (1..4).each do |row_label|
+        possible_column_coordinates  << consec_column_label.map do |column_num|
+          (row_label + 64).chr + column_num.to_s
+        end
+      end
+    end
+    possible_column_coordinates
+  end
+
+  def generate_random_possible_ship_placement
+    possible_ship_placement = generate_ship_coordinate_placement_horizontal + generate_ship_coordinate_placement_vertical
+    possible_ship_placement.sample
+  end
+  # (1..4).each_cons(3) do |vertical_sequence|
+  #   new_array = vertical_sequence.map do |columns_label|
+  #     (row_label + 64).chr
+  #   end
+
 
   def place_ship(ship, ship_position)
     #places
