@@ -1,22 +1,19 @@
 class Computer
 
-  attr_reader :ship_1, :ship_2, :ships
+  attr_reader :ships
   def initialize
-    @ships = []
-    # @ship_1 = Ship.new("cruiser", 3)
-    # @ship_2 = Ship.new("Submarine", 2)
+    @ships = generate_ships
     @board  = Board.new
   end
 
   def generate_ships
     @ships << Ship.new("cruiser", 3)
     @ships << Ship.new("submarine", 2)
-
   end
 
-  def generate_ship_coordinate_placement_vertical
+  def generate_ship_coordinate_placement_vertical(ship)
     possible_rows = Array.new
-    (1..4).each_cons(3) do |vertical_sequence|
+    (1..@board.board_size).each_cons(ship.length) do |vertical_sequence|
       new_array = vertical_sequence.map do |columns_label|
         #ascci capital a, to char in string
         (columns_label + 64).chr
@@ -27,7 +24,7 @@ class Computer
 
     possible_column_coordinates = Array.new
     possible_rows.each do |consec_row_label|
-      (1..4).each do |column_label|
+      (1..@board.board_size).each do |column_label|
         possible_column_coordinates  << consec_row_label.map do |cap_letter|
           cap_letter + column_label.to_s
         end
@@ -38,14 +35,14 @@ class Computer
 
   def generate_ship_coordinate_placement_horizontal
     possible_columns  = Array.new
-    (1..4).each_cons(3) do |horizontal_sequence|
+    (1..@board.board_size).each_cons(ship.length) do |horizontal_sequence|
       possible_columns << horizontal_sequence
     end
     # possible_columns = [[1, 2, 3], [2, 3, 4]]
 
     possible_column_coordinates = Array.new
     possible_columns.each do |consec_column_label|
-      (1..4).each do |row_label|
+      (1..@board.board_size).each do |row_label|
         possible_column_coordinates  << consec_column_label.map do |column_num|
           (row_label + 64).chr + column_num.to_s
         end
@@ -65,7 +62,8 @@ class Computer
 
 
   def place_ship(ship, ship_position)
-    #places
+    #method in board class
+    @board.place_ship_on_board(ship, ship_position)
   end
 
 # consider will, if start with list of hash keys on board. Board.keys
