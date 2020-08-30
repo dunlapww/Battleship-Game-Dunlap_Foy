@@ -136,5 +136,12 @@
      display
    end
 
+   def place_ship_on_board(ship, ship_position)
+     ship_position.each do |coord|
+       @cells[coord].place_ship(ship)
+     end
+   end
+
+
 
  end
