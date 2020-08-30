@@ -2,15 +2,20 @@ class Computer
 
   attr_reader :ship_1, :ship_2
   def initialize
-    @ship_1 = nil
-    @ship_2 = nil
+    @ship_1 = Ship.new("cruiser", 3)
+    @ship_2 = Ship.new("Submarine", 2)
     @board  = Board.new
   end
 
-  def place_ship_1 # place in length of the ship, dynamic
+  # method that gets valid placements, rand, and then passes coordinates
+  # into valid_placement? board method. Loop until rand coord passes true
+  # from valid_placement?.
+  # thus, 2 helper methods, atleast.
+
+  def generate_random_coordinate(ship) # place in length of the ship, dynamic
     possible_rows = Array.new
-    (1..@board.width).each_cons(3) do |column|
-      possible_rows << column.map { |ordinate| require "pry"; binding.pry(ordinate+64).chr }
+    (1..@board.width).each_cons(ship.length) do |column|
+      possible_rows << column.map { |ordinate| (ordinate+64).chr }
     end
 
     possible_vertical_coordinates = Array.new
@@ -22,6 +27,11 @@ class Computer
       # get all possible horizontal coordinates, add array to possible_vertical_coordinates
       # sample from collective rand array.
       require "pry"; binding.pry
+
+  end
+
+  def place_ship(ship, )
+    #places
   end
 
 # consider will, if start with list of hash keys on board. Board.keys
