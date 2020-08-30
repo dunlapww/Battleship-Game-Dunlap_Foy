@@ -124,7 +124,6 @@
    end
 
 
-
    def render
      counter = 0
      display = display_column_headers
