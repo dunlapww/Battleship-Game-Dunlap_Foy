@@ -41,7 +41,6 @@ class Game
     end
 
 
-    # arguments requierd?
     computer = Computer.new
     user     = User.new
     # will initialize with ships and board, need to call computer atrribute in the
@@ -101,13 +100,13 @@ class Game
       end
     end
 
-  until (user.ship_1.sunk? && user.ship_2.sunk?) || (computer.ship_1.sunk? && computer.ship_2.sunk?)
-    display_game_boards
-    user_shot
-    computer_shot
+    until (user.ship_1.sunk? && user.ship_2.sunk?) || (computer.ship_1.sunk? && computer.ship_2.sunk?)
+      display_game_boards
+      user_shot
+      computer_shot
+    end
+  end_game
   end
-end_game
-end
 
   def end_game
     if (user.ship_1.sunk? && user.ship_2.sunk?)
@@ -144,7 +143,5 @@ end
     print "==================PLAYER BOARD=================\n"
     user.board.render(true)
   end
-
-
 
 end

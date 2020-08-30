@@ -8,31 +8,36 @@ class Computer
   end
 
   def generate_fire_upon_coordinate
-    available_coords = user.board.
+    available_coords = user.board
   # method that gets valid placements, rand, and then passes coordinates
   # into valid_placement? board method. Loop until rand coord passes true
   # from valid_placement?.
   # thus, 2 helper methods, atleast.
-
-  def generate_ship_coordinate_placement(ship) # place in length of the ship, dynamic
-    possible_rows = Array.new
-    (1..@board.width).each_cons(ship.length) do |column|
-      possible_rows << column.map { |ordinate| (ordinate+64).chr }
-    end
-
-    possible_vertical_coordinates = Array.new
-      possible_rows.each do |a|
-        (1..@board.length).each do |column|
-          possible_vertical_coordinates << a.map { |num| num + column.to_s}
-        end
-      end
-      # get all possible horizontal coordinates, add array to possible_vertical_coordinates
-      # sample from collective rand array.
-      require "pry"; binding.pry
-
   end
 
-  def place_ship(ship, )
+  def generate_ship_coordinate_placement_vertical
+    possible_rows = Array.new
+    (1..4).each_cons(3) do |horizontal_sequence|
+      new_array = horizontal_sequence.map do |columns_label|
+        (columns_label + 64).chr
+      end
+      possible_rows << new_array
+      # possible_rows = [["A", "B", "C"], ["B", "C", "D"]]
+    end
+
+    possible_column_coordinates = Array.new
+    # require "pry"; binding.pry
+    possible_rows.each do |consec_row_label|
+      (1..4).each do |column_label|
+        possible_column_coordinates  << consec_row_label.map do |cap_letter|
+          cap_letter + column_label.to_s
+        end
+      end
+    end
+    possible_column_coordinates
+  end
+
+  def place_ship(ship, ship_position)
     #places
   end
 
