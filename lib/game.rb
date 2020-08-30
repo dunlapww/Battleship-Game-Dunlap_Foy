@@ -70,42 +70,18 @@ class Game
     print "You now need to layout your #{user.ships.size} ships.\n"
     print "The cruiser is three units long and the submarine is two units long.\n"
     user.board.render
+    
+    user.place_ships
 
 
-    valid = false
-    until valid == true do
-      print "Enter the squares for the #{user.ship_1.name}(#{user.ship_1.length} spaces):"
-      user_input = gets.chomp
-      if user.board.valid_placement?(user.ship_1, user_input)
-        valid = true
-        user.place_ship(ship_1, user_input)
-      else
-        print "Those are invalid coordinates. Please try again:\n"
-        user.board.render
-      end
+ 
+    until (user.ship_1.sunk? && user.ship_2.sunk?) || (computer.ship_1.sunk? && computer.ship_2.sunk?)
+      display_game_boards
+      user_shot
+      computer_shot
     end
-
-    user.board.render
-    valid = false
-    until valid == true do
-      print "Enter the squares for the #{user.ship_2.name}(#{user.ship_2.length} spaces):"
-      user_input = gets.chomp
-      if user.board.valid_placement?(user.ship_2, user_input)
-        valid = true
-        user.place_ship(ship_2, user_input)
-      else
-        print "Those are invalid coordinates. Please try again:\n"
-        user.board.render
-      end
-    end
-
-  until (user.ship_1.sunk? && user.ship_2.sunk?) || (computer.ship_1.sunk? && computer.ship_2.sunk?)
-    display_game_boards
-    user_shot
-    computer_shot
+  end_game
   end
-end_game
-end
 
   def end_game
     if (user.ship_1.sunk? && user.ship_2.sunk?)
@@ -142,8 +118,6 @@ end
     print "==================PLAYER BOARD=================\n"
     user.board.render(true)
   end
-
-
 
 end
 # valid = false
