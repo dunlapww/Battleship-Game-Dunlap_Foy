@@ -1,3 +1,9 @@
+require './lib/cell'
+require './lib/ship'
+require './lib/board'
+require './lib/user'
+require './lib/computer'
+
 class Game
   attr_accessor :game_start_input
 
