@@ -1,24 +1,24 @@
 class Computer
 
-  attr_reader :ship_1, :ship_2
+  attr_reader :ship_1, :ship_2, :ships
   def initialize
-    @ship_1 = Ship.new("cruiser", 3)
-    @ship_2 = Ship.new("Submarine", 2)
+    @ships = []
+    # @ship_1 = Ship.new("cruiser", 3)
+    # @ship_2 = Ship.new("Submarine", 2)
     @board  = Board.new
   end
 
-  def generate_fire_upon_coordinate
-    available_coords = user.board
-  # method that gets valid placements, rand, and then passes coordinates
-  # into valid_placement? board method. Loop until rand coord passes true
-  # from valid_placement?.
-  # thus, 2 helper methods, atleast.
+  def generate_ships
+    @ships << Ship.new("cruiser", 3)
+    @ships << Ship.new("submarine", 2)
+
   end
 
   def generate_ship_coordinate_placement_vertical
     possible_rows = Array.new
     (1..4).each_cons(3) do |vertical_sequence|
       new_array = vertical_sequence.map do |columns_label|
+        #ascci capital a, to char in string
         (columns_label + 64).chr
       end
       possible_rows << new_array
@@ -26,7 +26,6 @@ class Computer
     end
 
     possible_column_coordinates = Array.new
-    # require "pry"; binding.pry
     possible_rows.each do |consec_row_label|
       (1..4).each do |column_label|
         possible_column_coordinates  << consec_row_label.map do |cap_letter|
@@ -45,7 +44,6 @@ class Computer
     # possible_columns = [[1, 2, 3], [2, 3, 4]]
 
     possible_column_coordinates = Array.new
-    # require "pry"; binding.pry
     possible_columns.each do |consec_column_label|
       (1..4).each do |row_label|
         possible_column_coordinates  << consec_column_label.map do |column_num|

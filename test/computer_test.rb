@@ -12,12 +12,20 @@ class ComputerTest < Minitest::Test
     assert_instance_of Computer, computer
   end
 
-  # def test_it_has_attributes
-  #   computer = Computer.new
-  #
-  #   assert_nil computer.ship_1
-  #   assert_nil computer.ship_2
-  # end
+  def test_generate_ships
+    computer = Computer.new
+    assert_equal = [], computer.ships
+    computer.generate_ships
+    assert_equal 2, computer.ships.size
+    computer.ships.each do |ship|
+      assert_instance_of Ship, ship
+    end
+    expected = ["cruiser", "submarine"]
+    actual   = computer.ships.map do |ship|
+      ship.name
+    end.sort
+    assert_equal  expected , actual
+  end
 
   def test_generate_ship_coordinate_placement_vertical
     computer = Computer.new
