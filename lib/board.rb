@@ -1,5 +1,5 @@
  class Board
-   attr_reader :cells
+   attr_reader :cells, :width, :length
    def initialize()
     @cells = generate_board
    end
@@ -122,7 +122,6 @@
    def display_row_header(counter, board_size)
      board_rows[counter == 0 ? 0 : counter / board_size] + " "
    end
-
 
 
    def render

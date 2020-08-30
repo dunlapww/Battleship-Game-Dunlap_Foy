@@ -18,6 +18,7 @@ class Game
     if @game_start_input.downcase == 'p'
       return ""
     elsif @game_start_input.downcase == 'q'
+      # exit will take user back to terminal.
       exit(true)
     else
       return "Sorry, it's not clear what you'd like to do, let's try this again...\n\n"
@@ -32,8 +33,68 @@ class Game
       get_user_input
       print interpret_user_input
     end
-    print "i got here"
   end
+
+# arguments requierd?
+  computer = Computer.new
+  user     = User.new
+  # will initialize with ships and board, need to call computer atrribute in the
+  # compter method. Cannot call from game class.
+  valid = false
+  until valid == true do
+    ship_1 = computer.ship_1
+    ship_1_placement = computer.generate_random_coordinate(computer.ship_1)
+
+
+    if computer.board.valid_placement?(ship_1, ship_1_placement)
+      valid = true
+      computer.place_ship(ship_1, ship_1_placement)
+    end
+  end
+
+  valid = false
+  until valid == true do
+    ship_2 = computer.ship_2
+    ship_2_placement = computer.generate_random_coordinate(computer.ship_2)
+
+    if computer.board.valid_placement?(ship_2, ship_2_placement)
+      valid = true
+      computer.place_ship(ship_2, ship_2_placement)
+    end
+  end
+  print "I have laid out my ships on the grid.\n"
+  print "You now need to layout your two ships.\n"
+  print "The cruiser is three units long and the submarine is two units long.\n"
+  user.board.render
+
+
+  valid = false
+  until valid == true do
+    print "Enter the squares for the #{user.ship_1.name}(#{user.ship_1.length} spaces):"
+    user_input = gets.chomp
+    if user.board.valid_placement?(user.ship_1, user_input)
+      valid = true
+      user.place_ship(ship_1, user_input)
+    else
+      print "Proposed placement is invalid, please try again.\n"
+      user.board.render
+    end
+  end
+
+  user.board.render
+  valid = false
+  until valid == true do
+    print "Enter the squares for the #{user.ship_2.name}(#{user.ship_2.length} spaces):"
+    user_input = gets.chomp
+    if user.board.valid_placement?(user.ship_2, user_input)
+      valid = true
+      user.place_ship(ship_2, user_input)
+    else
+      print "Proposed placement is invalid, please try again.\n"
+      user.board.render
+    end
+  end
+
 
 
 end
