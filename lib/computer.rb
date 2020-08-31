@@ -61,9 +61,17 @@ class Computer
   #   end
 
 
-  def place_ship(ship, ship_position)
-    #method in board class
-    @board.place_ship_on_board(ship, ship_position)
+  def place_ships
+    @ships.each do |ship|
+      valid = false
+      until valid do
+        proposed_placement = generate_ship_coordinate_placement(ship)
+        if @board.valid_placement?(ship, proposed_placement)
+          valid = true
+          @board.place_ship_on_board(ship, proposed_placement)
+        end
+      end
+    end
   end
 
 # consider will, if start with list of hash keys on board. Board.keys
