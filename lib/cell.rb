@@ -36,4 +36,10 @@ class Cell
     end
   end
 
+  def impact
+    return "was a hit!" if render == "H"
+    return "was a miss." if render == "M"
+    return "sunk my #{@ship.name}!" if render == "X"
+  end
+
 end

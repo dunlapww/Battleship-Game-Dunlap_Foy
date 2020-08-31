@@ -75,9 +75,9 @@ class Game
 
   def computer_shot
     avail_cells = @user.untargeted_cells
-    computer_target = avail_cells.sample
-    @user.is_fired_upon(computer_target)
-    print "My shot on #{computer_target} was a ???\n"
+    coord = avail_cells.sample
+    @user.is_fired_upon(coord)
+    print "My shot on #{coord} #{user.board.shot_impact(coord)}\n"
   end
 
   def user_shot
@@ -96,7 +96,7 @@ class Game
         print "'#{coord}' is an invalid coord, please enter a valid coordinate:"
       end
     end
-    print "Your shot on #{coord} was a ???\n"
+    print "Your shot on #{coord} #{computer.board.shot_impact(coord)}\n"
   end
 
   def display_game_boards

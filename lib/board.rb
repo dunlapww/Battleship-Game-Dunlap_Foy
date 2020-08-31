@@ -158,6 +158,10 @@
      @cells[coord].fired_upon?
    end
 
+   def shot_impact(coord)
+     @cells[coord].impact
+   end
+
 
 
 
