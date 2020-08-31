@@ -5,12 +5,10 @@ require './lib/user'
 require './lib/computer'
 
 class Game
-  attr_accessor :game_start_input
+  attr_accessor :game_start_input, :computer, :user
 
   def initialize
     @game_start_input = ""
-    @computer = Computer.new
-    @user = User.new
   end
 
 
@@ -32,8 +30,6 @@ class Game
       return "Sorry, it's not clear what you'd like to do, let's try this again...\n\n"
     end
   end
-  #
-  #
 
   def main_menu_loop
     until @game_start_input == 'p' do
@@ -44,80 +40,70 @@ class Game
   end
 
   def play
-    main_menu_loop
+    inf_loop = true
+    while inf_loop do
+      main_menu_loop
+      @game_start_input = ""
+      @computer = Computer.new
+      @user = User.new
 
-    computer.place_ships
-    print "I have laid out my ships on the grid.\n"
-    print "You now need to layout your #{user.ships.size} ships.\n"
-    print "The cruiser is three units long and the submarine is two units long.\n"
-    user.board.render
+      @computer.place_ships
+      print "I have laid out my ships on the grid.\n"
+      print "You now need to layout your #{@user.ships.size} ships.\n"
+      print "The cruiser is three units long and the submarine is two units long.\n"
+      print @user.board.render
 
-    user.place_ships
+      @user.place_ships
 
-    until user.ships.all? {|ship| ship.sunk?} || computer.ships.all?{|ship| ship.sunk?}
-      display_game_boards
-      user_shot
-      computer_shot
+      until @user.ships.all? {|ship| ship.sunk?} || @computer.ships.all?{|ship| ship.sunk?}
+        display_game_boards
+        user_shot
+        computer_shot
+      end
+      end_game
     end
-  end_game
   end
 
   def end_game
-    if (user.ship_1.sunk? && user.ship_2.sunk?)
+    if @user.ships.all? {|ship| ship.sunk?}
       print "I Won!\n"
     else
       print "You won!\n"
     end
-    main_menu
+    main_menu_loop
   end
 
   def computer_shot
-    avail_cells = user.board.select {|cell| cell.fired_upon == false}
-    computer.fire_upon(avail_cells.sample)
+    avail_cells = @user.untargeted_cells
+    computer_target = avail_cells.sample
+    @user.is_fired_upon(computer_target)
+    print "My shot on #{computer_target} was a ???\n"
   end
 
   def user_shot
     valid = false
     print "Enter the coordinate for your shot:"
     until valid == true do
-      user_input = gets.chomp
-      if computer.board.validate_coordinate?(user_input)
-        valid = true
-        user.fire_upon(user_input)
+      coord = gets.chomp
+      if computer.valid_coordinate?(coord)
+        if computer.already_shot?(coord)
+          print "You've already shot at #{coord}, please enter a different coord:"
+        else
+          valid = true
+          computer.is_fired_upon(coord)
+        end
       else
-        computer.board.render
-        print "Please enter a valid coordinate:\n"
+        print "'#{coord}' is an invalid coord, please enter a valid coordinate:"
       end
     end
+    print "Your shot on #{coord} was a ???\n"
   end
 
   def display_game_boards
     print "=================COMPUTER BOARD=================\n"
-    computer.board.render
+    print computer.display_board
     print "==================PLAYER BOARD=================\n"
-    user.board.render(true)
+    print user.display_board(true)
   end
 
 end
-# valid = false
-# until valid == true do
-#   ship_1 = computer.ship_1
-#   ship_1_placement = computer.generate_ship_coordinate_placement(computer.ship_1)
-#
-#
-#   if computer.board.valid_placement?(ship_1, ship_1_placement)
-#     valid = true
-#     computer.place_ship(ship_1, ship_1_placement)
-#   end
-# end
-#
-# valid = false
-# until valid == true do
-#   ship_2 = computer.ship_2
-#   ship_2_placement = computer.generate_ship_coordinate_placement(computer.ship_2)
-#
-#   if computer.board.valid_placement?(ship_2, ship_2_placement)
-#     valid = true
-#     computer.place_ship(ship_2, ship_2_placement)
-#   end
-# end

@@ -1,5 +1,5 @@
  class Board
-   attr_reader :cells, :width, :length
+   attr_reader :cells
    def initialize()
     @cells = generate_board
    end
@@ -141,6 +141,23 @@
        @cells[coord].place_ship(ship)
      end
    end
+
+   def fired_upon(coord)
+     @cells[coord].fire_upon
+   end
+
+   def untargeted_cells
+     untargeted_coords = []
+     @cells.each do |coord, cell|
+       untargeted_coords << coord if @cells[coord].fired_upon == false
+     end
+     untargeted_coords
+   end
+
+   def already_shot?(coord)
+     @cells[coord].fired_upon?
+   end
+
 
 
 

@@ -25,18 +25,14 @@ class Cell
   end
 
   def render(show_ship = false)
-    if @fired_upon == false && show_ship == false
-      return "."
-    elsif @fired_upon && @ship.class == Ship && @ship.health == 0
-      return "X"
-    elsif @fired_upon && @ship == nil
-      return "M"
-    elsif @fired_upon && @ship.class == Ship
-      return "H"
-    elsif show_ship && @ship.class == Ship
-     return "S"
+    if empty?
+      @fired_upon ? "M" : "."
     else
-     return "error_catcher"
+      if @fired_upon
+        @ship.sunk? ? "X" : "H"
+      else
+        show_ship ? "S" : "."
+      end
     end
   end
 
