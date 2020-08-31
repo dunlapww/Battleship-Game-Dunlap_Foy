@@ -16,7 +16,7 @@ class Computer
 
   def generate_ship_coordinate_placement_vertical(ship)
     possible_rows = Array.new
-    (1..@board.board_size).each_cons(ship.length) do |vertical_sequence|
+    (1..@board.width).each_cons(ship.length) do |vertical_sequence|
       new_array = vertical_sequence.map do |columns_label|
         #ascci capital a, to char in string
         (columns_label + 64).chr
@@ -27,7 +27,7 @@ class Computer
 
     possible_column_coordinates = Array.new
     possible_rows.each do |consec_row_label|
-      (1..@board.board_size).each do |column_label|
+      (1..@board.length).each do |column_label|
         possible_column_coordinates  << consec_row_label.map do |cap_letter|
           cap_letter + column_label.to_s
         end
@@ -38,14 +38,14 @@ class Computer
 
   def generate_ship_coordinate_placement_horizontal(ship)
     possible_columns  = Array.new
-    (1..@board.board_size).each_cons(ship.length) do |horizontal_sequence|
+    (1..@board.length).each_cons(ship.length) do |horizontal_sequence|
       possible_columns << horizontal_sequence
     end
     # possible_columns = [[1, 2, 3], [2, 3, 4]]
 
     possible_column_coordinates = Array.new
     possible_columns.each do |consec_column_label|
-      (1..@board.board_size).each do |row_label|
+      (1..@board.width).each do |row_label|
         possible_column_coordinates  << consec_column_label.map do |column_num|
           (row_label + 64).chr + column_num.to_s
         end

@@ -1,6 +1,9 @@
  class Board
-   attr_reader :cells
+   attr_reader :cells , :width, :length
    def initialize()
+
+    @width = 4
+    @length = 4
     @cells = generate_board
    end
 
@@ -9,11 +12,11 @@
    end
 
    def board_rows
-     ("A"..(board_size + 64).chr).to_a
+     ("A"..(@width + 64).chr).to_a
    end
 
    def board_columns
-     (1..board_size).to_a
+     (1..@length).to_a
    end
 
    def gen_coord(letter, number)
@@ -119,8 +122,8 @@
      first_row
    end
 
-   def display_row_header(counter, board_size)
-     board_rows[counter == 0 ? 0 : counter / board_size] + " "
+   def display_row_header(counter)
+     board_rows[counter == 0 ? 0 : counter / @width] + " "
    end
 
 
@@ -128,10 +131,10 @@
      counter = 0
      display = display_column_headers
      ordered_coords.each do |coord|
-       display += display_row_header(counter, board_size) if counter % board_size == 0
+       display += display_row_header(counter) if counter % @width == 0
        counter += 1
        display += "#{@cells[coord].render(bool)} "
-       display += "\n" if counter % board_size == 0
+       display += "\n" if counter % @width == 0
      end
      display
    end
@@ -156,6 +159,10 @@
 
    def already_shot?(coord)
      @cells[coord].fired_upon?
+   end
+
+   def shot_impact(coord)
+     @cells[coord].impact
    end
 
 

@@ -143,4 +143,16 @@ class CellTest < Minitest::Test
 
 
 
+  def test_impact_returns_memos
+    cell = Cell.new("B4")
+    cell.fire_upon
+    assert_equal "shot was a miss.", cell.impact
+    ship = Ship.new("Cruiser",3)
+    cell.place_ship(ship)
+    assert_equal "shot was a hit!", cell.impact
+    cell.fire_upon
+    cell.fire_upon
+    cell.fire_upon
+    assert_equal "sunk my Cruiser!", cell.impact
+  end
 end

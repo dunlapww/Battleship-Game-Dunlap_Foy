@@ -210,7 +210,7 @@ class BoardTest < Minitest::Test
 
   def test_it_can_display_row_headers
     board = Board.new
-    assert_equal "D ", board.display_row_header(15, 5)
+    assert_equal "D ", board.display_row_header(15)
   end
 
   def test_it_can_render_the_board
