@@ -54,6 +54,7 @@ class Game
       print @user.board.render
 
       @user.place_ships
+      print "\n\nLET'S PLAY!\n\n"
 
       until @user.ships.all? {|ship| ship.sunk?} || @computer.ships.all?{|ship| ship.sunk?}
         display_game_boards
@@ -61,6 +62,7 @@ class Game
         computer_shot
       end
       end_game
+      print "#{display_game_boards}\n\nHow about another round?...\n\n"
     end
   end
 
@@ -70,7 +72,6 @@ class Game
     else
       print "You won!\n"
     end
-    main_menu_loop
   end
 
   def computer_shot
