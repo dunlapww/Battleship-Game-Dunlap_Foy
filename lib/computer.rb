@@ -65,7 +65,7 @@ class Computer
     @ships.each do |ship|
       valid = false
       until valid do
-        proposed_placement = generate_ship_coordinate_placement(ship)
+        proposed_placement = generate_random_possible_ship_placement
         if @board.valid_placement?(ship, proposed_placement)
           valid = true
           @board.place_ship_on_board(ship, proposed_placement)
