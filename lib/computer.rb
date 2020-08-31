@@ -81,7 +81,7 @@ class Computer
     @board.render(bool)
   end
 
-  def fired_upon(coord)
+  def is_fired_upon(coord)
     @board.fired_upon(coord)
   end
 

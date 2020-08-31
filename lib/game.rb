@@ -71,7 +71,7 @@ class Game
 
   def computer_shot
     avail_cells = @user.untargeted_cells
-    @user.fired_upon(avail_cells.sample)
+    @user.is_fired_upon(avail_cells.sample)
   end
 
   def user_shot
@@ -81,10 +81,10 @@ class Game
       user_input = gets.chomp
       if computer.valid_coordinate?(user_input)
         valid = true
-        computer.fired_upon(user_input)
+        computer.is_fired_upon(user_input)
       else
         print computer.display_board
-        print "Please enter a valid coordinate:\n"
+        print "Please enter a valid coordinate:"
       end
     end
   end

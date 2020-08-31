@@ -23,8 +23,6 @@ class User
           @board.place_ship_on_board(ship, proposed_placement)
         else
           print "Those are invalid coordinates. Please try again:\n"
-          # true -> display the board AND display "S"'s
-          @board.render(true)
         end
       end
     end
@@ -38,7 +36,7 @@ class User
     @board.untargeted_cells
   end
 
-  def fired_upon(coord)
+  def is_fired_upon(coord)
     @board.fired_upon(coord)
   end
 
