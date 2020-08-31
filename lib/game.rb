@@ -79,11 +79,11 @@ class Game
     print "Enter the coordinate for your shot:"
     until valid == true do
       user_input = gets.chomp
-      if computer.board.validate_coordinate?(user_input)
+      if computer.valid_coordinate?(user_input)
         valid = true
         computer.fired_upon(user_input)
       else
-        print computer.board.render
+        print computer.display_board
         print "Please enter a valid coordinate:\n"
       end
     end
