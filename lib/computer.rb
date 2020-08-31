@@ -89,6 +89,9 @@ class Computer
     @board.validate_coordinate?(coord)
   end
 
+  def already_shot?(coord)
+    @board.already_shot?(coord)
+  end
 
 end
 #  pick random cell, pick a random direction *, move consecutively ~to ship.length

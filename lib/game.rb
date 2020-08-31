@@ -9,8 +9,6 @@ class Game
 
   def initialize
     @game_start_input = ""
-    @computer = Computer.new
-    @user = User.new
   end
 
 
@@ -42,26 +40,32 @@ class Game
   end
 
   def play
-    main_menu_loop
+    inf_loop = true
+    while inf_loop do
+      main_menu_loop
+      @game_start_input = ""
+      @computer = Computer.new
+      @user = User.new
 
-    @computer.place_ships
-    print "I have laid out my ships on the grid.\n"
-    print "You now need to layout your #{@user.ships.size} ships.\n"
-    print "The cruiser is three units long and the submarine is two units long.\n"
-    print @user.board.render
+      @computer.place_ships
+      print "I have laid out my ships on the grid.\n"
+      print "You now need to layout your #{@user.ships.size} ships.\n"
+      print "The cruiser is three units long and the submarine is two units long.\n"
+      print @user.board.render
 
-    @user.place_ships
+      @user.place_ships
 
-    until @user.ships.all? {|ship| ship.sunk?} || @computer.ships.all?{|ship| ship.sunk?}
-      display_game_boards
-      user_shot
-      computer_shot
+      until @user.ships.all? {|ship| ship.sunk?} || @computer.ships.all?{|ship| ship.sunk?}
+        display_game_boards
+        user_shot
+        computer_shot
+      end
+      end_game
     end
-  end_game
   end
 
   def end_game
-    if user.ships.all? {|ship| ship.sunk?}
+    if @user.ships.all? {|ship| ship.sunk?}
       print "I Won!\n"
     else
       print "You won!\n"
@@ -71,22 +75,28 @@ class Game
 
   def computer_shot
     avail_cells = @user.untargeted_cells
-    @user.is_fired_upon(avail_cells.sample)
+    computer_target = avail_cells.sample
+    @user.is_fired_upon(computer_target)
+    print "My shot on #{computer_target} was a ???\n"
   end
 
   def user_shot
     valid = false
     print "Enter the coordinate for your shot:"
     until valid == true do
-      user_input = gets.chomp
-      if computer.valid_coordinate?(user_input)
-        valid = true
-        computer.is_fired_upon(user_input)
+      coord = gets.chomp
+      if computer.valid_coordinate?(coord)
+        if computer.already_shot?(coord)
+          print "You've already shot at #{coord}, please enter a different coord:"
+        else
+          valid = true
+          computer.is_fired_upon(coord)
+        end
       else
-        print computer.display_board
-        print "Please enter a valid coordinate:"
+        print "'#{coord}' is an invalid coord, please enter a valid coordinate:"
       end
     end
+    print "Your shot on #{coord} was a ???\n"
   end
 
   def display_game_boards

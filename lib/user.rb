@@ -21,6 +21,7 @@ class User
         if @board.valid_placement?(ship, proposed_placement)
           valid = true
           @board.place_ship_on_board(ship, proposed_placement)
+          print display_board(true)
         else
           print "Those are invalid coordinates. Please try again:\n"
         end
@@ -38,6 +39,10 @@ class User
 
   def is_fired_upon(coord)
     @board.fired_upon(coord)
+  end
+
+  def already_shot?(coord)
+    @board.already_shot?(coord)
   end
 
 end

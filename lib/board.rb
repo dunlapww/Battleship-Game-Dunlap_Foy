@@ -154,6 +154,11 @@
      untargeted_coords
    end
 
+   def already_shot?(coord)
+     @cells[coord].fired_upon?
+   end
+
+
 
 
  end
