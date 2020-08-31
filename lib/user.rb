@@ -17,7 +17,7 @@ class User
       valid = false
       until valid do
         print "Enter the squares for the #{ship.name}(#{ship.length} spaces):"
-        proposed_placement = gets.chomp
+        proposed_placement = gets.chomp.split(" ")
         if @board.valid_placement?(ship, proposed_placement)
           valid = true
           @board.place_ship_on_board(ship, proposed_placement)
@@ -29,4 +29,17 @@ class User
       end
     end
   end
+
+  def display_board(bool = false)
+    @board.render(bool)
+  end
+
+  def untargeted_cells
+    @board.untargeted_cells
+  end
+
+  def fired_upon(coord)
+    @board.fired_upon(coord)
+  end
+
 end

@@ -77,6 +77,14 @@ class Computer
     end
   end
 
+  def display_board(bool = false)
+    @board.render(bool)
+  end
+
+  def fired_upon(coord)
+    @board.fired_upon(coord)
+  end
+
 
 end
 #  pick random cell, pick a random direction *, move consecutively ~to ship.length

@@ -48,7 +48,7 @@ class Game
     print "I have laid out my ships on the grid.\n"
     print "You now need to layout your #{@user.ships.size} ships.\n"
     print "The cruiser is three units long and the submarine is two units long.\n"
-    @user.board.render
+    print @user.board.render
 
     @user.place_ships
 
@@ -70,8 +70,8 @@ class Game
   end
 
   def computer_shot
-    avail_cells = user.board.select {|cell| cell.fired_upon == false}
-    computer.fire_upon(avail_cells.sample)
+    avail_cells = @user.untargeted_cells
+    @user.fired_upon(avail_cells.sample)
   end
 
   def user_shot
@@ -81,9 +81,9 @@ class Game
       user_input = gets.chomp
       if computer.board.validate_coordinate?(user_input)
         valid = true
-        user.fire_upon(user_input)
+        computer.fired_upon(user_input)
       else
-        computer.board.render
+        print computer.board.render
         print "Please enter a valid coordinate:\n"
       end
     end
@@ -91,9 +91,9 @@ class Game
 
   def display_game_boards
     print "=================COMPUTER BOARD=================\n"
-    computer.board.render
+    print computer.display_board
     print "==================PLAYER BOARD=================\n"
-    user.board.render(true)
+    print user.display_board(true)
   end
 
 end
