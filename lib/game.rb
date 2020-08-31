@@ -63,12 +63,12 @@ class Game
   end
 
   def end_game
-    if (user.ship_1.sunk? && user.ship_2.sunk?)
+    if user.ships.all? {|ship| ship.sunk?}
       print "I Won!\n"
     else
       print "You won!\n"
     end
-    main_menu
+    main_menu_loop
   end
 
   def computer_shot
