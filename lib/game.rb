@@ -5,7 +5,7 @@ require './lib/user'
 require './lib/computer'
 
 class Game
-  attr_accessor :game_start_input
+  attr_accessor :game_start_input, :computer, :user
 
   def initialize
     @game_start_input = ""
@@ -32,8 +32,6 @@ class Game
       return "Sorry, it's not clear what you'd like to do, let's try this again...\n\n"
     end
   end
-  #
-  #
 
   def main_menu_loop
     until @game_start_input == 'p' do
@@ -46,15 +44,15 @@ class Game
   def play
     main_menu_loop
 
-    computer.place_ships
+    @computer.place_ships
     print "I have laid out my ships on the grid.\n"
-    print "You now need to layout your #{user.ships.size} ships.\n"
+    print "You now need to layout your #{@user.ships.size} ships.\n"
     print "The cruiser is three units long and the submarine is two units long.\n"
-    user.board.render
+    @user.board.render
 
-    user.place_ships
+    @user.place_ships
 
-    until user.ships.all? {|ship| ship.sunk?} || computer.ships.all?{|ship| ship.sunk?}
+    until @user.ships.all? {|ship| ship.sunk?} || @computer.ships.all?{|ship| ship.sunk?}
       display_game_boards
       user_shot
       computer_shot
@@ -99,25 +97,3 @@ class Game
   end
 
 end
-# valid = false
-# until valid == true do
-#   ship_1 = computer.ship_1
-#   ship_1_placement = computer.generate_ship_coordinate_placement(computer.ship_1)
-#
-#
-#   if computer.board.valid_placement?(ship_1, ship_1_placement)
-#     valid = true
-#     computer.place_ship(ship_1, ship_1_placement)
-#   end
-# end
-#
-# valid = false
-# until valid == true do
-#   ship_2 = computer.ship_2
-#   ship_2_placement = computer.generate_ship_coordinate_placement(computer.ship_2)
-#
-#   if computer.board.valid_placement?(ship_2, ship_2_placement)
-#     valid = true
-#     computer.place_ship(ship_2, ship_2_placement)
-#   end
-# end

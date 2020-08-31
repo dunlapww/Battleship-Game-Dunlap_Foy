@@ -1,14 +1,15 @@
 class User
+  attr_reader :ships, :board
   def initialize
     @ships = generate_ships
-    @ship_1 = Ship.new("cruiser", 3)
-    @ship_2 = Ship.new("submarine", 2)
     @board = Board.new
   end
 
   def generate_ships
-    @ships << Ship.new("cruiser", 3)
-    @ships << Ship.new("submarine", 2)
+    ships = []
+    ships << Ship.new("cruiser", 3)
+    ships << Ship.new("submarine", 2)
+    ships
   end
 
   def place_ships

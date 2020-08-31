@@ -1,14 +1,17 @@
-class Computer
 
-  attr_reader :ships
+class Computer
+  attr_reader :ships, :board
+
   def initialize
     @ships = generate_ships
     @board  = Board.new
   end
 
   def generate_ships
-    @ships << Ship.new("cruiser", 3)
-    @ships << Ship.new("submarine", 2)
+    ships = []
+    ships << Ship.new("cruiser", 3)
+    ships << Ship.new("submarine", 2)
+    ships
   end
 
   def generate_ship_coordinate_placement_vertical(ship)
@@ -33,7 +36,7 @@ class Computer
     possible_column_coordinates
   end
 
-  def generate_ship_coordinate_placement_horizontal
+  def generate_ship_coordinate_placement_horizontal(ship)
     possible_columns  = Array.new
     (1..@board.board_size).each_cons(ship.length) do |horizontal_sequence|
       possible_columns << horizontal_sequence
@@ -51,8 +54,8 @@ class Computer
     possible_column_coordinates
   end
 
-  def generate_random_possible_ship_placement
-    possible_ship_placement = generate_ship_coordinate_placement_horizontal + generate_ship_coordinate_placement_vertical
+  def generate_random_possible_ship_placement(ship)
+    possible_ship_placement = generate_ship_coordinate_placement_horizontal(ship) + generate_ship_coordinate_placement_vertical(ship)
     possible_ship_placement.sample
   end
   # (1..4).each_cons(3) do |vertical_sequence|
@@ -65,7 +68,7 @@ class Computer
     @ships.each do |ship|
       valid = false
       until valid do
-        proposed_placement = generate_random_possible_ship_placement
+        proposed_placement = generate_random_possible_ship_placement(ship)
         if @board.valid_placement?(ship, proposed_placement)
           valid = true
           @board.place_ship_on_board(ship, proposed_placement)
@@ -73,11 +76,6 @@ class Computer
       end
     end
   end
-
-# consider will, if start with list of hash keys on board. Board.keys
-# B3, C3, D3 - not generated in the array.
-
-# fire_upon
 
 
 end
