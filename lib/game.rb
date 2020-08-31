@@ -43,39 +43,18 @@ class Game
     end
   end
 
-  def place_computer_ships
-    @computer.ships.each do |ship|
-      valid = false
-      until valid do
-        proposed_placement = @computer.generate_ship_coordinate_placement(ship)
-        if @computer.board.valid_placement?(ship, proposed_placement)
-          valid = true
-          @computer.place_ship(ship, proposed_placement)
-        end
-      end
-    end
-  end
-
-  def place_user_ships
-    @user.ships.each do |ship|
-      valid = false
-      until valid do
-        proposed_placement = 
-
   def play
     main_menu_loop
 
-    place_computer_ships
+    computer.place_ships
     print "I have laid out my ships on the grid.\n"
     print "You now need to layout your #{user.ships.size} ships.\n"
     print "The cruiser is three units long and the submarine is two units long.\n"
     user.board.render
-    
+
     user.place_ships
 
-
- 
-    until (user.ship_1.sunk? && user.ship_2.sunk?) || (computer.ship_1.sunk? && computer.ship_2.sunk?)
+    until user.ships.all? {|ship| ship.sunk?} || computer.ships.all?{|ship| ship.sunk?}
       display_game_boards
       user_shot
       computer_shot
