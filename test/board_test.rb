@@ -234,6 +234,14 @@ class BoardTest < Minitest::Test
     assert_equal "Cruiser", board.cells["C1"].ship.name
   end
 
+  def test_board_knows_its_been_fired_upon
+    board = Board.new
+    refute board.cells["A1"].fired_upon?
+    board.fired_upon("A1")
+    assert board.cells["A1"].fired_upon?
+  end
+
+  
 
 
 
