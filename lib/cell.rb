@@ -25,7 +25,7 @@ class Cell
   end
 
   #sunk? empty? fired_upon? show_ship == true/false
-  # 16 possible if stmts, truth table. 
+  # 16 possible if stmts, truth table.
 
   def render(show_ship = false)
     if empty?
@@ -42,7 +42,7 @@ class Cell
   def impact
     return "was a hit!" if render == "H"
     return "was a miss." if render == "M"
-    return "sunk my #{@ship.name}!" if render == "X"
+    return "sunk a #{@ship.name}!" if render == "X"
   end
 
 end

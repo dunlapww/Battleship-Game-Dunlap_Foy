@@ -38,7 +38,7 @@ class User
   end
 
   def is_fired_upon(coord)
-    @board.fired_upon(coord)
+    @board.fire_upon(coord)
   end
 
   def already_shot_at?(coord)

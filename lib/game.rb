@@ -90,9 +90,13 @@ class Game
     end
   end
 
+  def get_computer_cell(avail_cells)
+    coord = avail_cells.sample
+  end
+
   def computer_shot
     avail_cells = @user.untargeted_cells
-    coord = avail_cells.sample
+    coord = get_computer_cell(avail_cells)
     @user.is_fired_upon(coord)
     print "My shot on #{coord} #{user.board.shot_impact(coord)}\n"
   end

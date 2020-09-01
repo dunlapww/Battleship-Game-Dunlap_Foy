@@ -145,7 +145,7 @@
      end
    end
 
-   def fired_upon(coord)
+   def fire_upon(coord)
      @cells[coord].fire_upon
    end
 

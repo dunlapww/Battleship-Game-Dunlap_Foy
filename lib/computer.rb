@@ -85,7 +85,7 @@ class Computer
   end
 
   def is_fired_upon(coord)
-    @board.fired_upon(coord)
+    @board.fire_upon(coord)
   end
 
   def valid_coordinate?(coord)
