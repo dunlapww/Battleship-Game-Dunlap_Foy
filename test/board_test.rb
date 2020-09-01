@@ -17,9 +17,14 @@ class BoardTest < Minitest::Test
     assert_instance_of Board, board
   end
 
-  def test_board_size_is_a_number
+  def test_board_length_is_a_number
     board = Board.new()
-    assert_instance_of Integer, board.board_size
+    assert_instance_of Integer, board.length
+  end
+
+  def test_board_width_is_a_number
+    board = Board.new()
+    assert_instance_of Integer, board.width
   end
 
   def test_board_rows_returns_incremental_letters
@@ -45,12 +50,12 @@ class BoardTest < Minitest::Test
 
   def test_it_can_generate_a_board
     board = Board.new()
-    # board_size = 4
+    # board size = 4 x 4
     board_coords = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4",
       "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
 
     assert_instance_of Hash, board.cells
-    assert_equal board.board_size * board.board_size, board.cells.size
+    assert_equal board.length * board.width, board.cells.size
     assert_equal board_coords, board.cells.keys
     board_coords.each do |coord|
       assert_instance_of Cell, board.cells[coord]

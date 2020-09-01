@@ -1,8 +1,8 @@
 class User
   attr_reader :ships, :board
-  def initialize
+  def initialize(width = 4)
     @ships = generate_ships
-    @board = Board.new
+    @board = Board.new(width)
   end
 
   def generate_ships
@@ -16,7 +16,7 @@ class User
     @ships.each do |ship|
       valid = false
       until valid do
-        print "Enter the squares for the #{ship.name}(#{ship.length} spaces):"
+        print "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
         proposed_placement = gets.chomp.split(" ")
         if @board.valid_placement?(ship, proposed_placement)
           valid = true
