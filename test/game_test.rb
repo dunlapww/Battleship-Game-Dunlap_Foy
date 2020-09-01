@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'mocha/minitest'
 require './lib/cell'
 require './lib/ship'
 require './lib/board'
@@ -31,6 +32,16 @@ class GameTest < Minitest::Test
 
     game.game_start_input = '7282s'
     assert_equal "Sorry, it's not clear what you'd like to do, let's try this again...\n\n", game.interpret_user_input
+  end
+
+  def test_get_computer_cell
+    game = Game.new()
+    computer = Computer.new
+    game.stubs(:sample).returns("A1")
+
+
+
+
   end
 
 end

@@ -57,12 +57,10 @@ class Game
     inf_loop = true
     while inf_loop do
       main_menu_loop
-
       @game_start_input = ""
       get_board_size
       @computer = Computer.new(@board_size)
       @user = User.new(@board_size)
-
       @computer.place_ships
       print "I have laid out my ships on the grid.\n"
       print "You now need to layout your #{@user.ships.size} ships.\n"
@@ -77,8 +75,9 @@ class Game
         user_shot
         computer_shot
       end
+      print display_game_boards
       end_game
-      print "#{display_game_boards}\n\nHow about another round?...\n\n"
+      print "How about another round?...\n\n"
     end
   end
 
@@ -90,9 +89,13 @@ class Game
     end
   end
 
+  def get_computer_cell(avail_cells)
+    coord = avail_cells.sample
+  end
+
   def computer_shot
     avail_cells = @user.untargeted_cells
-    coord = avail_cells.sample
+    coord = get_computer_cell(avail_cells)
     @user.is_fired_upon(coord)
     print "My shot on #{coord} #{user.board.shot_impact(coord)}\n"
   end
@@ -101,7 +104,7 @@ class Game
     valid = false
     print "Enter the coordinate for your shot:"
     until valid == true do
-      coord = gets.chomp
+      coord = gets.chomp.upcase
       if computer.valid_coordinate?(coord)
         if computer.already_shot_at?(coord)
           print "You've already shot at #{coord}, please enter a different coord:"

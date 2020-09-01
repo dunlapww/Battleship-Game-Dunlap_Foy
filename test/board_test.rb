@@ -224,6 +224,38 @@ class BoardTest < Minitest::Test
     board.render
   end
 
+  def test_place_ship_on_board
+    board = Board.new
+    ship = Ship.new("Cruiser", 3)
+    placement = ["A1","B1","C1"]
+    board.place_ship_on_board(ship, placement)
+    assert_equal "Cruiser", board.cells["A1"].ship.name
+    assert_equal "Cruiser", board.cells["B1"].ship.name
+    assert_equal "Cruiser", board.cells["C1"].ship.name
+  end
+
+  def test_board_knows_its_been_fired_upon
+    board = Board.new
+    refute board.cells["A1"].fired_upon?
+    board.fire_upon("A1")
+    assert board.cells["A1"].fired_upon?
+  end
+
+  def test_targetted_cell_not_included_in_untargeted_cells
+    board = Board.new
+    assert_equal board.cells.size, board.untargeted_cells.size
+    board.fire_upon("A1")
+    refute board.untargeted_cells.include?("A1")
+  end
+
+  def test_cell_has_been_fired_upon
+    board = Board.new
+    refute board.already_shot?("A1")
+    board.fire_upon("A1")
+    assert board.already_shot?("A1")
+  end
+
+  
 
 
 end

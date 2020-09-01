@@ -17,13 +17,13 @@ class User
       valid = false
       until valid do
         print "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
-        proposed_placement = gets.chomp.split(" ")
+        proposed_placement = gets.chomp.upcase.split(" ")
         if @board.valid_placement?(ship, proposed_placement)
           valid = true
           @board.place_ship_on_board(ship, proposed_placement)
           print display_board(true)
         else
-          print "Those are invalid coordinates. Please try again:\n"
+          print "Those are invalid coordinates. Please try again...\n"
         end
       end
     end
@@ -38,7 +38,7 @@ class User
   end
 
   def is_fired_upon(coord)
-    @board.fired_upon(coord)
+    @board.fire_upon(coord)
   end
 
   def already_shot_at?(coord)
