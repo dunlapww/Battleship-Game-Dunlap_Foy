@@ -15,47 +15,50 @@ class Computer
   end
 
   def generate_ship_coordinate_placement_vertical(ship)
-    possible_rows = Array.new
-    (1..@board.width).each_cons(ship.length) do |vertical_sequence|
-      new_array = vertical_sequence.map do |columns_label|
-        #ascci capital a, to char in string
-        (columns_label + 64).chr
+    possible_letter_placements  = Array.new
+    (1..@board.width).each_cons(ship.length) do |consec_nums|
+      consec_letter_placement = consec_nums.map do |num|
+        # num to char
+        (num + 64).chr
       end
-      possible_rows << new_array
-      # possible_rows = [["A", "B", "C"], ["B", "C", "D"]]
+      possible_letter_placements << consec_letter_placement
+      # possible_letter_placements = [["A", "B", "C"], ["B", "C", "D"]]
     end
 
-    possible_column_coordinates = Array.new
-    possible_rows.each do |consec_row_label|
-      (1..@board.length).each do |column_label|
-        possible_column_coordinates  << consec_row_label.map do |cap_letter|
-          cap_letter + column_label.to_s
+    possible_vertical_placements = Array.new
+    possible_letter_placements.each do |letter_placement|
+      (1..@board.length).each do |num|
+        possible_vertical_placements  << letter_placement.map do |cap_letter|
+          cap_letter + num.to_s
         end
       end
     end
-    possible_column_coordinates
+    possible_vertical_placements
+    # require "pry"; binding.pry
   end
 
   def generate_ship_coordinate_placement_horizontal(ship)
-    possible_columns  = Array.new
-    (1..@board.length).each_cons(ship.length) do |horizontal_sequence|
-      possible_columns << horizontal_sequence
+    possible_number_placements  = Array.new
+    (1..@board.length).each_cons(ship.length) do |consec_nums|
+      possible_number_placements << consec_nums
     end
-    # possible_columns = [[1, 2, 3], [2, 3, 4]]
+    # possible_number_placements = [[1, 2, 3], [2, 3, 4]]
 
-    possible_column_coordinates = Array.new
-    possible_columns.each do |consec_column_label|
-      (1..@board.width).each do |row_label|
-        possible_column_coordinates  << consec_column_label.map do |column_num|
-          (row_label + 64).chr + column_num.to_s
+    possible_horizontal_placements = Array.new
+    possible_number_placements.each do |num_placement|
+      (1..@board.width).each do |num|
+        possible_horizontal_placements  << num_placement.map do |column_num|
+          (num + 64).chr + column_num.to_s
         end
       end
     end
-    possible_column_coordinates
+    possible_horizontal_placements
   end
 
   def generate_random_possible_ship_placement(ship)
-    possible_ship_placement = generate_ship_coordinate_placement_horizontal(ship) + generate_ship_coordinate_placement_vertical(ship)
+    horizontal_holder = generate_ship_coordinate_placement_horizontal(ship)
+    vertical_holder   = generate_ship_coordinate_placement_vertical(ship)
+    possible_ship_placement = horizontal_holder + vertical_holder
     possible_ship_placement.sample
   end
   # (1..4).each_cons(3) do |vertical_sequence|
@@ -89,7 +92,7 @@ class Computer
     @board.validate_coordinate?(coord)
   end
 
-  def already_shot?(coord)
+  def already_shot_at?(coord)
     @board.already_shot?(coord)
   end
 
