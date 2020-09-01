@@ -87,7 +87,7 @@ class Game
     until valid == true do
       coord = gets.chomp
       if computer.valid_coordinate?(coord)
-        if computer.already_shot?(coord)
+        if computer.already_shot_at?(coord)
           print "You've already shot at #{coord}, please enter a different coord:"
         else
           valid = true

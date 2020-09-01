@@ -1,5 +1,6 @@
 require 'minitest/autorun'
 require 'minitest/pride'
+require 'mocha/minitest'
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
@@ -27,28 +28,82 @@ class ComputerTest < Minitest::Test
 
   def test_generate_ship_coordinate_placement_vertical
     computer = Computer.new
-    actual = computer.generate_ship_coordinate_placement_vertical
+    ship = Ship.new("cruiser", 3)
 
-    expected = [["A1", "B1", "C1"], ["A2", "B2", "C2"], ["A3", "B3", "C3"], ["A4", "B4", "C4"], ["B1", "C1", "D1"], ["B2", "C2", "D2"], ["B3", "C3", "D3"], ["B4", "C4", "D4"]]
+    actual = computer.generate_ship_coordinate_placement_vertical(ship)
+    expected = [["A1", "B1", "C1"], ["A2", "B2", "C2"], ["A3", "B3", "C3"],
+    ["A4", "B4", "C4"], ["B1", "C1", "D1"], ["B2", "C2", "D2"],
+    ["B3", "C3", "D3"], ["B4", "C4", "D4"]]
+
+    assert_equal expected, actual
+
+    ship = Ship.new("submarine", 2)
+    actual = computer.generate_ship_coordinate_placement_vertical(ship)
+    expected = [["A1", "B1"], ["A2", "B2"], ["A3", "B3"], ["A4", "B4"],
+    ["B1", "C1"], ["B2", "C2"], ["B3", "C3"], ["B4", "C4"], ["C1", "D1"],
+    ["C2", "D2"], ["C3", "D3"], ["C4", "D4"]]
+
     assert_equal expected, actual
   end
 
-  def test_generate_ship_coordinate_placement_horizontal
+  def test_generate_possible_ship_placements_horizontal
     computer = Computer.new
-    actual = computer.generate_ship_coordinate_placement_horizontal
+    ship = Ship.new("cruiser", 3)
 
-    expected = [["A1", "A2", "A3"], ["B1", "B2", "B3"], ["C1", "C2", "C3"], ["D1", "D2", "D3"], ["A2", "A3", "A4"], ["B2", "B3", "B4"], ["C2", "C3", "C4"], ["D2", "D3", "D4"]]
+    actual = computer.generate_ship_coordinate_placement_horizontal(ship)
+    expected = [["A1", "A2", "A3"], ["B1", "B2", "B3"], ["C1", "C2", "C3"],
+    ["D1", "D2", "D3"], ["A2", "A3", "A4"], ["B2", "B3", "B4"],
+    ["C2", "C3", "C4"], ["D2", "D3", "D4"]]
+
     assert_equal expected, actual
+
+    ship = Ship.new("submarine", 2)
+    actual = computer.generate_ship_coordinate_placement_horizontal(ship)
+    expected = [["A1", "A2"], ["B1", "B2"], ["C1", "C2"], ["D1", "D2"],
+    ["A2", "A3"], ["B2", "B3"], ["C2", "C3"], ["D2", "D3"], ["A3", "A4"],
+    ["B3", "B4"], ["C3", "C4"], ["D3", "D4"]]
+
+    assert_equal expected, actual
+  end
+
+
+  def test_generate_possible_ship_placements_vertical
+    computer = Computer.new
+    ship = Ship.new("cruiser", 3)
+    # computer.generate_random_possible_ship_placement
+    actual = computer.generate_ship_coordinate_placement_vertical(ship)
+    expected = [["A1", "B1", "C1"], ["A2", "B2", "C2"], ["A3", "B3", "C3"],
+    ["A4", "B4", "C4"], ["B1", "C1", "D1"], ["B2", "C2", "D2"],
+    ["B3", "C3", "D3"], ["B4", "C4", "D4"]]
+
+    assert_equal expected, actual
+    # test letters / numbers are consec.
+
+    ship = Ship.new("submarine", 2)
+
+    # computer.generate_random_possible_ship_placement
+    actual   = computer.generate_ship_coordinate_placement_vertical(ship)
+    expected = [["A1", "B1"], ["A2", "B2"], ["A3", "B3"], ["A4", "B4"],
+    ["B1", "C1"], ["B2", "C2"], ["B3", "C3"], ["B4", "C4"], ["C1", "D1"],
+    ["C2", "D2"], ["C3", "D3"], ["C4", "D4"]]
   end
 
   def test_generate_random_possible_ship_placement
     computer = Computer.new
-    # computer.generate_random_possible_ship_placement
-    actual = computer.generate_random_possible_ship_placement
-    # require "pry"; binding.pry
-    assert_instance_of Array, actual
-    assert_equal actual.length, 3
-    # test letters / numbers are consec.
+    ship = Ship.new("submarine", 2)
+    expected_options = [["A1", "B1"], ["A2", "B2"], ["A3", "B3"], ["A4", "B4"],
+    ["B1", "C1"], ["B2", "C2"], ["B3", "C3"], ["B4", "C4"], ["C1", "D1"],
+    ["C2", "D2"], ["C3", "D3"], ["C4", "D4"]]
+    assert expected_options.include?(computer.generate_random_possible_ship_placement(ship))
+  end
+
+  def test_place_ships_places_ships
+    #test it loops if invalid placement
+    #have already tested methods in this method, just need to test loop logic
+    # computer = Computer.new
+    # ship = Ship.new("Cruiser", 3)
+
+    #test it changes cell values to ship when placed
   end
 
 end
