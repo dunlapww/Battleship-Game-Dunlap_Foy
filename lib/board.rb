@@ -1,22 +1,22 @@
  class Board
    attr_reader :cells , :width, :length
-   def initialize()
+   def initialize(width = 4)
 
-    @width = 4
-    @length = 4
+    @width = width
+    @length = width
     @cells = generate_board
    end
 
-   def board_size
-     4
-   end
+   # def board_size
+   #   4
+   # end
 
    def board_rows
-     ("A"..(@width + 64).chr).to_a
+     ("A"..(@length + 64).chr).to_a
    end
 
    def board_columns
-     (1..@length).to_a
+     (1..@width).to_a
    end
 
    def gen_coord(letter, number)

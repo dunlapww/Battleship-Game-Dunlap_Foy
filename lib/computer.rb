@@ -2,9 +2,9 @@
 class Computer
   attr_reader :ships, :board
 
-  def initialize
+  def initialize(width = 4)
     @ships = generate_ships
-    @board  = Board.new
+    @board  = Board.new(width)
   end
 
   def generate_ships

@@ -39,13 +39,29 @@ class Game
     end
   end
 
+  def get_board_size
+    valid = false
+    until valid
+      print "What size board would you like to play with? [4 - 10]:"
+      @board_size = gets.chomp.to_i
+      if (4..10).include?(@board_size)
+        valid = true
+      else
+        print "Sorry, invalid board size, I need a number between 4 and 10...\n"
+      end
+    end
+  end
+
+
   def play
     inf_loop = true
     while inf_loop do
       main_menu_loop
+
       @game_start_input = ""
-      @computer = Computer.new
-      @user = User.new
+      get_board_size
+      @computer = Computer.new(@board_size)
+      @user = User.new(@board_size)
 
       @computer.place_ships
       print "I have laid out my ships on the grid.\n"
