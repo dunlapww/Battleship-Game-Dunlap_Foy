@@ -224,6 +224,18 @@ class BoardTest < Minitest::Test
     board.render
   end
 
+  def test_place_ship_on_board
+    board = Board.new
+    ship = Ship.new("Cruiser", 3)
+    placement = ["A1","B1","C1"]
+    board.place_ship_on_board(ship, placement)
+    assert_equal "Cruiser", board.cells["A1"].ship.name
+    assert_equal "Cruiser", board.cells["B1"].ship.name
+    assert_equal "Cruiser", board.cells["C1"].ship.name
+  end
+
+
+
 
 
 end
