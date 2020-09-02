@@ -29,11 +29,6 @@ class UserTest < Minitest::Test
     assert_equal expected, user.display_board
   end
 
-  def test_untargeted_cells
-    user = User.new
-
-  end
-
   def test_targetted_cell_not_included_in_untargeted_cells
     user = User.new
     assert_equal user.board.cells.size, user.untargeted_cells.size
