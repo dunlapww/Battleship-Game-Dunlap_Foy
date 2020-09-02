@@ -24,7 +24,6 @@ class Game
     if @game_start_input.downcase == 'p'
       return ""
     elsif @game_start_input.downcase == 'q'
-      # exit will take user back to terminal.
       exit(true)
     else
       return "Sorry, it's not clear what you'd like to do, let's try this again...\n\n"

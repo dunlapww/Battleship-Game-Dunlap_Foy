@@ -24,9 +24,6 @@ class Cell
     @fired_upon
   end
 
-  #sunk? empty? fired_upon? show_ship == true/false
-  # 16 possible if stmts, truth table.
-
   def render(show_ship = false)
     if empty?
       @fired_upon ? "M" : "."

@@ -51,7 +51,6 @@ class CellTest < Minitest::Test
     assert_equal 0, ship.health
     cell.fire_upon
     assert_equal 0, ship.health
-
   end
 
   def test_when_cell_fired_upon_an_no_ship
@@ -65,7 +64,6 @@ class CellTest < Minitest::Test
   def test_cell_knows_its_fired_upon
     cell = Cell.new("B4")
     cell.fire_upon
-    # require "pry"; binding.pry
     assert_equal true, cell.fired_upon?
 
     cell = Cell.new("B4")
@@ -146,13 +144,13 @@ class CellTest < Minitest::Test
   def test_impact_returns_memos
     cell = Cell.new("B4")
     cell.fire_upon
-    assert_equal "shot was a miss.", cell.impact
+    assert_equal "was a miss.", cell.impact
     ship = Ship.new("Cruiser",3)
     cell.place_ship(ship)
-    assert_equal "shot was a hit!", cell.impact
+    assert_equal "was a hit!", cell.impact
     cell.fire_upon
     cell.fire_upon
     cell.fire_upon
-    assert_equal "sunk my Cruiser!", cell.impact
+    assert_equal "sunk a Cruiser!", cell.impact
   end
 end
