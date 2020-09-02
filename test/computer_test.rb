@@ -130,4 +130,11 @@ class ComputerTest < Minitest::Test
     assert computer.already_shot_at?("D1")
   end
 
+  def test_get_computer_cell
+    computer = Computer.new
+    cells_not_fired_on = ["A1", "A2", "A3"]
+
+    assert cells_not_fired_on.include?(computer.get_computer_cell(avail_cells))
+  end
+
 end

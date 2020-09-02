@@ -72,7 +72,7 @@ class Game
       until @user.ships.all? {|ship| ship.sunk?} || @computer.ships.all?{|ship| ship.sunk?}
         display_game_boards
         user_shot
-        computer_shot
+        print computer.fire_shot(@user)
       end
       print display_game_boards
       end_game
@@ -86,17 +86,6 @@ class Game
     else
       print "You won!\n"
     end
-  end
-
-  def get_computer_cell(avail_cells)
-    coord = avail_cells.sample
-  end
-
-  def computer_shot
-    avail_cells = @user.untargeted_cells
-    coord = get_computer_cell(avail_cells)
-    @user.is_fired_upon(coord)
-    print "My shot on #{coord} #{user.board.shot_impact(coord)}\n"
   end
 
   def user_shot

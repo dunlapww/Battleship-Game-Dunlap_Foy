@@ -74,6 +74,17 @@ class Computer
     end
   end
 
+  def fire_shot(opponent)
+    avail_cells = opponent.untargeted_cells
+    coord = get_computer_cell(avail_cells)
+    opponent.is_fired_upon(coord)
+    "My shot on #{coord} #{opponent.board.shot_impact(coord)}\n"
+  end
+
+  def get_computer_cell(avail_cells)
+    coord = avail_cells.sample
+  end
+
   def display_board(bool = false)
     @board.render(bool)
   end
