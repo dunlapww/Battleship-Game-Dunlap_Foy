@@ -29,6 +29,25 @@ class User
     end
   end
 
+  def fire_shot(opponent)
+    valid = false
+    print "Enter the coordinate for your shot:"
+    until valid == true do
+      coord = gets.chomp.upcase
+      if opponent.valid_coordinate?(coord)
+        if opponent.already_shot_at?(coord)
+          print "You've already shot at #{coord}, please enter a different coord:"
+        else
+          valid = true
+          opponent.is_fired_upon(coord)
+        end
+      else
+        print "'#{coord}' is an invalid coord, please enter a valid coordinate:"
+      end
+    end
+    print "Your shot on #{coord} #{opponent.board.shot_impact(coord)}\n"
+  end
+
   def display_board(bool = false)
     @board.render(bool)
   end

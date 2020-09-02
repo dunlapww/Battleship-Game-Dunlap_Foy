@@ -36,10 +36,4 @@ class GameTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_get_computer_cell
-    game = Game.new()
-    computer = Computer.new
-    game.stubs(:sample).returns("A1")
-  end
-
 end
