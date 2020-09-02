@@ -131,14 +131,3 @@ class ComputerTest < Minitest::Test
   end
 
 end
-
-# possible_column_coordinates = Array.new
-# possible_rows.each do |possible|
-#   (1..4).each do |row_num|
-#      new_array = row_num.map do |num|
-#        require "pry"; binding.pry
-#        num + column.to_s
-#      end
-#   end
-#   possible_vertical_coordinates
-# end
