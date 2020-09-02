@@ -1,5 +1,3 @@
-
-
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
@@ -44,7 +42,8 @@ class BoardTest < Minitest::Test
 
   def test_it_can_order_the_board_coordinates
     board = Board.new
-    sorted_coords = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1", "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
+    sorted_coords = ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "C1",
+      "C2", "C3", "C4", "D1", "D2", "D3", "D4"]
     assert_equal sorted_coords, board.ordered_coords
   end
 
@@ -254,8 +253,5 @@ class BoardTest < Minitest::Test
     board.fire_upon("A1")
     assert board.already_shot?("A1")
   end
-
-  
-
 
 end

@@ -7,10 +7,6 @@
     @cells = generate_board
    end
 
-   # def board_size
-   #   4
-   # end
-
    def board_rows
      ("A"..(@length + 64).chr).to_a
    end
@@ -164,8 +160,5 @@
    def shot_impact(coord)
      @cells[coord].impact
    end
-
-
-
 
  end

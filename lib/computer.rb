@@ -18,7 +18,6 @@ class Computer
     possible_letter_placements  = Array.new
     (1..@board.width).each_cons(ship.length) do |consec_nums|
       consec_letter_placement = consec_nums.map do |num|
-        # num to char
         (num + 64).chr
       end
       possible_letter_placements << consec_letter_placement
@@ -34,7 +33,6 @@ class Computer
       end
     end
     possible_vertical_placements
-    # require "pry"; binding.pry
   end
 
   def generate_ship_coordinate_placement_horizontal(ship)
@@ -61,10 +59,6 @@ class Computer
     possible_ship_placement = horizontal_holder + vertical_holder
     possible_ship_placement.sample
   end
-  # (1..4).each_cons(3) do |vertical_sequence|
-  #   new_array = vertical_sequence.map do |columns_label|
-  #     (row_label + 64).chr
-  #   end
 
 
   def place_ships
@@ -95,22 +89,4 @@ class Computer
   def already_shot_at?(coord)
     @board.already_shot?(coord)
   end
-
 end
-#  pick random cell, pick a random direction *, move consecutively ~to ship.length
-#  letters, vertical -> A1, B1, C1
-# * A1 -> east, add 1 to A.
-# def breakup_ship_placement(ship_position)
-#   @nums_letters = ship_position.map {|coord| coord.scan(/\d+|\D+/)}
-# end
-
-# ascii - how to convert ascii to string characters. how to get them,
-# how to convert, convert back
-
-#   (ship_1)@cells.keys => array or cell coordinates (randomize’s one coordinate,
-#   how to then generate 1-2 consecutive coordinates horizontal or vertical.
-#   Randomize if horizontal or vertical. Out of order is invalid) I like this.
-#   Might be able to take advantage of computing power and just have it try
-#   multiple spots until one works.
-#   Cell_coordinate array.randomize => rand_coordinate =>
-#   validate_coordinate?(rand_coordinate) => true, cell.place_ship(ship)

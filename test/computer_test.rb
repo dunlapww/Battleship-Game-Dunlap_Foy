@@ -81,29 +81,53 @@ class ComputerTest < Minitest::Test
 
     ship = Ship.new("submarine", 2)
 
-    # computer.generate_random_possible_ship_placement
-    actual   = computer.generate_ship_coordinate_placement_vertical(ship)
     expected = [["A1", "B1"], ["A2", "B2"], ["A3", "B3"], ["A4", "B4"],
     ["B1", "C1"], ["B2", "C2"], ["B3", "C3"], ["B4", "C4"], ["C1", "D1"],
     ["C2", "D2"], ["C3", "D3"], ["C4", "D4"]]
+    # computer.generate_random_possible_ship_placement
+    actual   = computer.generate_ship_coordinate_placement_vertical(ship)
+    assert_equal expected, actual
   end
 
   def test_generate_random_possible_ship_placement
     computer = Computer.new
     ship = Ship.new("submarine", 2)
-    expected_options = [["A1", "B1"], ["A2", "B2"], ["A3", "B3"], ["A4", "B4"],
+    expected = [["A1", "B1"], ["A2", "B2"], ["A3", "B3"], ["A4", "B4"],
     ["B1", "C1"], ["B2", "C2"], ["B3", "C3"], ["B4", "C4"], ["C1", "D1"],
-    ["C2", "D2"], ["C3", "D3"], ["C4", "D4"]]
-    assert expected_options.include?(computer.generate_random_possible_ship_placement(ship))
+    ["C2", "D2"], ["C3", "D3"], ["C4", "D4"], ["A1", "A2"], ["B1", "B2"],
+    ["C1", "C2"], ["D1", "D2"], ["A2", "A3"], ["B2", "B3"], ["C2", "C3"],
+    ["D2", "D3"], ["A3", "A4"], ["B3", "B4"], ["C3", "C4"], ["D3", "D4"]]
+    # require "pry"; binding.pry
+    assert expected.include?(computer.generate_random_possible_ship_placement(ship))
   end
 
-  def test_place_ships_places_ships
-    #test it loops if invalid placement
-    #have already tested methods in this method, just need to test loop logic
-    # computer = Computer.new
-    # ship = Ship.new("Cruiser", 3)
+  def test_display_board
+    computer = Computer.new
 
-    #test it changes cell values to ship when placed
+    expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+    assert_equal expected, computer.display_board
+  end
+
+  def test_is_fired_upon
+    computer = Computer.new
+
+    refute computer.already_shot_at?("A1")
+    computer.is_fired_upon("A1")
+    assert computer.already_shot_at?("A1")
+  end
+
+  def test_valid_coordinate?
+    computer = Computer.new
+    refute computer.valid_coordinate?("72H9O")
+    assert computer.valid_coordinate?("B2")
+  end
+
+  def test_already_shot_at?
+    computer = Computer.new
+
+    refute computer.already_shot_at?("D1")
+    computer.is_fired_upon("D1")
+    assert computer.already_shot_at?("D1")
   end
 
 end

@@ -17,7 +17,9 @@ class GameTest < Minitest::Test
   def test_it_can_ask_a_user_to_play
     game = Game.new()
 
-    assert_equal "Welcome to BATTLESHIP\nEnter p to play. Enter q to quit.\n", game.display_game_message
+    expected = "Welcome to BATTLESHIP\nEnter p to play. Enter q to quit.\n"
+    actual   = game.display_game_message
+    assert_equal expected, actual
   end
 
   def test_it_can_handle_all_user_input
@@ -27,21 +29,17 @@ class GameTest < Minitest::Test
     assert_equal "", game.interpret_user_input
 
     game.game_start_input = 'q'
-    #not sure how to write test, but it seems to work
-    #when i try to run a test for 'q', it exits program so...
 
     game.game_start_input = '7282s'
-    assert_equal "Sorry, it's not clear what you'd like to do, let's try this again...\n\n", game.interpret_user_input
+    expected = "Sorry, it's not clear what you'd like to do, let's try this again...\n\n"
+    actual   = game.interpret_user_input
+    assert_equal expected, actual
   end
 
   def test_get_computer_cell
     game = Game.new()
     computer = Computer.new
     game.stubs(:sample).returns("A1")
-
-
-
-
   end
 
 end
