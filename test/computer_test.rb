@@ -136,5 +136,4 @@ class ComputerTest < Minitest::Test
 
     assert cells_not_fired_on.include?(computer.get_computer_cell(avail_cells))
   end
-
 end

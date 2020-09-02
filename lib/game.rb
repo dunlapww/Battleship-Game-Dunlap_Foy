@@ -71,7 +71,7 @@ class Game
 
       until @user.ships.all? {|ship| ship.sunk?} || @computer.ships.all?{|ship| ship.sunk?}
         display_game_boards
-        user_shot
+        @user.fire_shot(@computer)
         print computer.fire_shot(@user)
       end
       print display_game_boards
@@ -86,25 +86,6 @@ class Game
     else
       print "You won!\n"
     end
-  end
-
-  def user_shot
-    valid = false
-    print "Enter the coordinate for your shot:"
-    until valid == true do
-      coord = gets.chomp.upcase
-      if computer.valid_coordinate?(coord)
-        if computer.already_shot_at?(coord)
-          print "You've already shot at #{coord}, please enter a different coord:"
-        else
-          valid = true
-          computer.is_fired_upon(coord)
-        end
-      else
-        print "'#{coord}' is an invalid coord, please enter a valid coordinate:"
-      end
-    end
-    print "Your shot on #{coord} #{computer.board.shot_impact(coord)}\n"
   end
 
   def display_game_boards
